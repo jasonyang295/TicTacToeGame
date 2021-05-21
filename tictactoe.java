@@ -11,6 +11,7 @@ class TicTacToe {
         char[][] gameboard = {{' ', '|', ' ', '|', ' '}, 
         {'-', '+', '-', '+', '-'}, {' ', '|', ' ', '|', ' '}, 
         {'-', '+', '-', '+', '-'}, {' ', '|', ' ', '|', ' '}};
+
         printgameboard(gameboard);
 
         
@@ -21,14 +22,18 @@ class TicTacToe {
             int playerpos = scaninput.nextInt();
 
             while (playerpositions.contains(playerpos) || cpupositions.contains(playerpos)) {
-                System.out.println("position taken! enter another");
+                System.out.println("position taken! enter a correct position");
                 playerpos = scaninput.nextInt();
             }
 
-            System.out.println(playerpos);
+            //System.out.println(playerpos);
         
             placePiece(gameboard, "player", playerpos);
-        
+            String result = checkwin();
+            if (result.length() > 0) {
+                System.out.println(result);
+                break;
+            }
 
             Random rand = new Random();
             int cpuPosition = rand.nextInt(9) + 1; //establishes almost AI feeling
@@ -39,11 +44,13 @@ class TicTacToe {
             }
             placePiece(gameboard, "cpu", cpuPosition);
 
-
             printgameboard(gameboard);
 
-            String result = checkwin();
-            System.out.println(result);
+            result = checkwin();
+            if (result.length() >0) {
+                System.out.println(result);
+                break;
+            }
         }
         
         //scaninput.close();
