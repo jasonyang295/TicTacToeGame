@@ -19,6 +19,12 @@ class TicTacToe {
             Scanner scaninput = new Scanner(System.in);
             System.out.println("Enter your placement (1-9):");
             int playerpos = scaninput.nextInt();
+
+            while (playerpositions.contains(playerpos) || cpupositions.contains(playerpos)) {
+                System.out.println("position taken! enter another");
+                playerpos = scaninput.nextInt();
+            }
+
             System.out.println(playerpos);
         
             placePiece(gameboard, "player", playerpos);
@@ -26,6 +32,11 @@ class TicTacToe {
 
             Random rand = new Random();
             int cpuPosition = rand.nextInt(9) + 1; //establishes almost AI feeling
+
+            while (playerpositions.contains(cpuPosition) || cpupositions.contains(cpuPosition)) {
+                System.out.println("position taken! enter another");
+                cpuPosition = rand.nextInt(9) + 1;
+            }
             placePiece(gameboard, "cpu", cpuPosition);
 
 
