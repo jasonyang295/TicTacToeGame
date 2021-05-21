@@ -1,6 +1,12 @@
 import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 class TicTacToe {
+
+    static ArrayList<Integer> playerpositions = new ArrayList<Integer>();
+    static ArrayList<Integer> cpupositions = new ArrayList<Integer>();
+
     public static void main(String[] args) {
         char[][] gameboard = {{' ', '|', ' ', '|', ' '}, 
         {'-', '+', '-', '+', '-'}, {' ', '|', ' ', '|', ' '}, 
@@ -24,6 +30,9 @@ class TicTacToe {
 
 
             printgameboard(gameboard);
+
+            String result = checkwin();
+            System.out.println(result);
         }
         
         //scaninput.close();
@@ -44,8 +53,10 @@ class TicTacToe {
 
         if (user.equals("player")) {
             symbol = 'X';
+            playerpositions.add(pos);
         } else {
             symbol = '0';
+            cpupositions.add(pos);
         }
         
         switch(pos) {
@@ -79,5 +90,38 @@ class TicTacToe {
             default:
                 break;
         }
+    }
+
+    public static String checkwin() {
+        List toprow = Arrays.asList(1,2,3);
+        List midrow = Arrays.asList(4,5,6);
+        List botrow = Arrays.asList(7,8,9);
+        List leftcol = Arrays.asList(1,4,7);
+        List midcol = Arrays.asList(2,5,8);
+        List rightcol = Arrays.asList(3,6,9);
+        List leftdiag = Arrays.asList(1,5,9);
+        List rightdiag = Arrays.asList(7,5,3);
+
+        List<List> winning = new ArrayList<List>();
+        winning.add(toprow);
+        winning.add(midrow);
+        winning.add(botrow);
+        winning.add(leftcol);
+        winning.add(midcol);
+        winning.add(rightcol);
+        winning.add(leftdiag);
+        winning.add(rightdiag);
+
+        for (List l: winning) {
+            if (playerpositions.containsAll(l)) {
+                return "Congrats you won!";
+            }
+            else if (cpupositions.containsAll(l)) {
+                return "Sorry, you lost!";
+            } else if (playerpositions.size() + cpupositions.size() == 9) {
+                return "tie";
+            }
+        }
+        return "";
     }
 }
